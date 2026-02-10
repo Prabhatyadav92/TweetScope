@@ -5,7 +5,7 @@ from streamlit_extras.colored_header import colored_header
 from streamlit_extras.stylable_container import stylable_container
 
 # -----------------------------
-# Session State Initialization
+# Session State Initializatio
 # -----------------------------
 if "example" not in st.session_state:
     st.session_state.example = ""
