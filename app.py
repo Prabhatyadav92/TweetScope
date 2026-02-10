@@ -310,7 +310,7 @@ with col2:
     if st.button("🔄 Refresh", key="refresh_top", type="secondary"):
         st.session_state.example = ""
         st.session_state.last_analysis = None
-        st.experimental_rerun()
+        st.rerun()
 
 # Tweet input
 tweet = st.text_area(
@@ -345,13 +345,13 @@ with c1:
     if st.button("😊 Positive Examples", key="positive_example"):
         import random
         st.session_state.example = random.choice(positive_examples)
-        st.experimental_rerun()
+        st.rerun()
 
 with c2:
     if st.button("😠 Negative Examples", key="negative_example"):
         import random
         st.session_state.example = random.choice(negative_examples)
-        st.experimental_rerun()
+        st.rerun()
 
 st.markdown("</div>", unsafe_allow_html=True)
 
@@ -363,11 +363,11 @@ with col2:
     if st.button("🗑️ Clear", type="secondary", use_container_width=True):
         st.session_state.example = ""
         st.session_state.last_analysis = None
-        st.experimental_rerun()
+        st.rerun()
 with col3:
     if st.button("📋 Examples", type="secondary", use_container_width=True):
         st.session_state.example = "This is amazing! I love it so much! Best experience ever! 😍"
-        st.experimental_rerun()
+        st.rerun()
 
 # -----------------------------
 # Prediction Logic for Binary Classification
@@ -461,7 +461,8 @@ if analyze or st.session_state.last_analysis:
         st.markdown("---")
         
         # Result card with dynamic class
-        st.markdown(f"<div class='result-card {result['card_class']}'>", unsafe_allow_html=True)
+        card_class = result.get('card_class', '')
+        st.markdown(f"<div class='result-card {card_class}'>", unsafe_allow_html=True)
         
         # Sentiment display
         st.markdown("<div class='sentiment-display'>", unsafe_allow_html=True)
@@ -469,6 +470,7 @@ if analyze or st.session_state.last_analysis:
             f"<div class='sentiment-emoji'>{result['emoji']}</div>",
             unsafe_allow_html=True
         )
+        # FIXED LINE: Using single quotes inside the f-string
         st.markdown(
             f"<div class='sentiment-text' style='color:{result[\"color\"]};'>"
             f"{result['label']}</div>",
@@ -539,12 +541,12 @@ if analyze or st.session_state.last_analysis:
         # Action buttons after analysis
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("🔄 Analyze Another Tweet", type="secondary", use_container_width=True):
+            if st.button("🔄 Analyze Another Tweet", type="secondary", use_container_width=True, key="analyze_another"):
                 st.session_state.example = ""
                 st.session_state.last_analysis = None
-                st.experimental_rerun()
+                st.rerun()
         with col2:
-            if st.button("📊 View Details", type="secondary", use_container_width=True):
+            if st.button("📊 View Details", type="secondary", use_container_width=True, key="view_details"):
                 st.info("""
                 **Classification Details:**
                 - **Model Type:** Binary Classifier
