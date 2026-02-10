@@ -4,3 +4,4 @@ joblib
 numpy
 pandas
 nltk
+streamlit-extras
